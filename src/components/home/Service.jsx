@@ -4,7 +4,7 @@ export const Service = () => {
   return (
     <div className="container_repairman">
     <div className="table-repairman">
-      <table className='table'>
+      <table className='table table-light table-bordered text-center'>
         <tr>
           <th className='tr-1'>STT</th>
           <th className='tr-6'>Thợ</th>
