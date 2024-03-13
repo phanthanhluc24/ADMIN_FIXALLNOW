@@ -1,6 +1,9 @@
 import React from 'react'
 import { Login } from '../components/auth/Login'
 import { NavBar } from '../components/home/NavBar'
+import { Repairman } from '../components/home/Repairman'
+import { RepairmanFinder } from '../components/home/RepairmanFinder'
+import { Service } from '../components/home/Service'
 
 export const Index = () => [
     {
@@ -12,16 +15,16 @@ export const Index = () => [
         element:<NavBar/>,
         children:[
             {
-                path:"/repairman",
-                element:""
+                path:"repairman",
+                element:<Repairman/>
             },
             {
-                path:"/repairman_finder",
-                element:""
+                path:"repairman_finder",
+                element:<RepairmanFinder/>
             },
             {
-                path:"/service",
-                element:""
+                path:"service",
+                element:<Service/>
             }
         ]
     }
