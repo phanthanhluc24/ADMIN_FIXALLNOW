@@ -28,6 +28,7 @@ export const Repairman = () => {
               <th className=' text-center'>Số điện thoại</th>
               <th className=' text-center'>Tổng dịch vụ</th>
               <th className=' text-center'>Địa chỉ</th>
+              <th className=' text-center'>Trạng thái</th>
               <th className=' text-center'>Hành động</th>
             </tr>
           </thead>
@@ -41,6 +42,7 @@ export const Repairman = () => {
               <td>{item.repair.number_phone}</td>
               <td>{item.service}</td>
               <td>{item.repair.address}</td>
+              <td>{item.repair.status}</td>
               <td className='d-flex mr-2 justify-content-center'>
                 <button className='btn btn-warning'>Khóa tài khoản</button>
               </td>
@@ -55,7 +57,7 @@ export const Repairman = () => {
           <button
             key={page}
             onClick={() => handelChangePage(page)}
-            className={`btn ${currentPage==page ? "btn-primary":"" } `}
+            className={`btn ${currentPage==page ? "btn-primary":"btn-secondary" } `}
             >
             <p>
               {page}
