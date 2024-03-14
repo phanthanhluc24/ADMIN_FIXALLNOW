@@ -59,9 +59,7 @@ export const Repairman = () => {
             onClick={() => handelChangePage(page)}
             className={`btn ${currentPage==page ? "btn-primary":"btn-secondary" } `}
             >
-            <p>
               {page}
-            </p>
           </button>
         ))}
       </div>
