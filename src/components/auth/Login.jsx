@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react'
 import "../../assets/sass/Index.scss"
 import login_image from "../../assets/images/form_image.png"
 import logo from "../../assets/images/logo.png"
+import { apiAdminLogin } from '../../apis/apiAdminLogin'
+import {useNavigate } from "react-router-dom"
 export const Login = () => {
     const [login, setLogin] = useState({ email: "", password: "" })
     const [error, setError] = useState({ email: "", password: "" })
+    const [serverError,setServerError]=useState("")
+    const navigate=useNavigate ()
     const handleInput = (e) => {
         const value = { ...login, [e.target.name]: e.target.value }
         setLogin(value)
@@ -13,10 +17,8 @@ export const Login = () => {
         const validateEmailRegex = /^\S+@\S+\.\S+$/;
         if (login.email != "" && !validateEmailRegex.test(login.email)) {
             setError({ ...error, email: "Email không hợp lệ" });
-            console.log("hrlo");
         } else {
             setError({ ...error, email: "" });
-            console.log("hi");
         }
     }, [login.email]);
 
@@ -32,7 +34,14 @@ export const Login = () => {
 
     const handleAdminLogin = (e) => {
         e.preventDefault()
-        console.log(login);
+        apiAdminLogin(login)
+        .then((res)=>{
+            if (res.status!=201) {
+               setServerError(res.message)
+               return
+            }
+            navigate("admin/manage/repairman")
+        })
     }
     return (
         <>
@@ -49,6 +58,7 @@ export const Login = () => {
                             <p>Fix All Now</p>
                         </div>
                         <div className="form_login">
+                            <p style={{color:"red"}}>{serverError}</p>
                             <form action="" method="post" onSubmit={handleAdminLogin}>
                                 <div className="form_group">
                                     <input type="email" name='email' placeholder='Vui lòng nhập email' onChange={handleInput} />
