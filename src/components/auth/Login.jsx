@@ -4,6 +4,7 @@ import login_image from "../../assets/images/form_image.png"
 import logo from "../../assets/images/logo.png"
 import { apiAdminLogin } from '../../apis/apiAdminLogin'
 import {useNavigate } from "react-router-dom"
+import Cookies from "js-cookie"
 export const Login = () => {
     const [login, setLogin] = useState({ email: "", password: "" })
     const [error, setError] = useState({ email: "", password: "" })
@@ -17,6 +18,7 @@ export const Login = () => {
         const validateEmailRegex = /^\S+@\S+\.\S+$/;
         if (login.email != "" && !validateEmailRegex.test(login.email)) {
             setError({ ...error, email: "Email không hợp lệ" });
+            setServerError("")
         } else {
             setError({ ...error, email: "" });
         }
@@ -26,6 +28,7 @@ export const Login = () => {
         const validatePasswordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
         if (login.password != "" && !validatePasswordRegex.test(login.password)) {
             setError({ ...error, password: "Vui lòng bao gồm số chữ cái hoa, thường và đặc biệt" });
+            setServerError("")
         } else {
             setError({ ...error, password: "" });
         }
@@ -40,9 +43,18 @@ export const Login = () => {
                setServerError(res.message)
                return
             }
+            const maxAgeInSeconds = 7 * 24 * 60 * 60;
+            Cookies.set("accessToken",res.accessToken,{expires: maxAgeInSeconds })
             navigate("admin/manage/repairman")
         })
     }
+
+    useEffect(()=>{
+        const cookies=Cookies.get("accessToken")
+        if (cookies) {
+            navigate("admin/manage/repairman")
+        }
+    },[])
     return (
         <>
             <div className="container_login">
